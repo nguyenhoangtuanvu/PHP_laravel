@@ -15,7 +15,7 @@
         <ul class="navbar-nav">
 
             <li class="nav-item">
-                <a class="nav-link text-white " href="./dashboard.html">
+                <a class="nav-link text-white {{ request()->routeIs('dashboard') ? 'bg-gradient-primary active' : ''}}" href="{{ route('dashboard')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
@@ -27,13 +27,13 @@
 
 
             <li class="nav-item">
-                <a class="nav-link text-white " href="./tables.html">
+                <a class="nav-link text-white {{ request()->routeIs('roles.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('roles.index')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
                     </div>
 
-                    <span class="nav-link-text ms-1">Tables</span>
+                    <span class="nav-link-text ms-1">Roles</span>
                 </a>
             </li>
 
