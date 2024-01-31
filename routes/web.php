@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +49,7 @@ Route::get('/contact', function () {
 });
 
 Route::resource('roles', RoleController::class);
+Route::resource('user', UserController::class);
 
 Auth::routes();
 

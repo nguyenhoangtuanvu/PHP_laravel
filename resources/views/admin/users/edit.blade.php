@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Edit Roles ' . $role->name)
+@section('title', 'Edit User ' . $role->name)
 @section('content')
     <div class="card">
         <h1>Edit role</h1>

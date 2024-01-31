@@ -12,13 +12,12 @@
 
                 <div class="input-group input-group-static mb-4">
                     <label>Name</label>
-                    <input type="text" value="{{ old('name') }}" name="name" class="form-control">
-
+                    <input type="text" value="{{ old('name') }}" name="name" class="form-control"> 
+                    {{-- old . sau khi validate thì nó sẽ hiện value đã input trước đó --}}
                     @error('name')
                         <span class="text-danger"> {{ $message }}</span>
                     @enderror
                 </div>
-
                 <div class="input-group input-group-static mb-4">
                     <label>Display Name</label>
                     <input type="text" value="{{ old('display_name') }}" name="display_name" class="form-control">
