@@ -5,6 +5,9 @@
 
 <h2>Roles List</h2>
 <div class="card"> 
+    @if (session('message'))
+            <h1 class="text-primary">{{ session('message') }}</h1>
+    @endif
     <div><a href="{{ route('roles.create')}}" class="btn btn-primary"> Create</a></div>
     <table class="table table-hover">
         <tr>
@@ -23,14 +26,13 @@
                 <td>
                     <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">Edit</a>
 
-                    <form action="{{ route('roles.destroy', $role->id) }}" id="form-delete{{ $role->id }}"
-                        method="post">
+                    <form action="{{ route('roles.destroy', $role->id) }}" id="form-delete{{ $role->id }}" method="post">
                         @csrf
                         @method('delete')
 
+                        <button type="submit" class="btn btn-delete btn-danger" data-id={{ $role->id }}>Delete</button>
                     </form>
 
-                    <button class="btn btn-delete btn-danger" data-id={{ $role->id }}>Delete</button>
 
                 </td>
             </tr>
