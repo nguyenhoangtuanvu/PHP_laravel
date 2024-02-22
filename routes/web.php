@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +26,9 @@ Route::get('/dashboard', function () {
     return view('admin.Dashboard.index');
 })->name('dashboard');
 
+Route::get('/home', function () {
+    return view('clients.home');
+});
 // products
 Route::get('/shop', function () {
     return view('clients.products.shop');
@@ -50,6 +55,8 @@ Route::get('/contact', function () {
 
 Route::resource('roles', RoleController::class);
 Route::resource('user', UserController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('products', ProductController::class);
 
 Auth::routes();
 

@@ -46,6 +46,26 @@
                     <span class="nav-link-text ms-1">Users</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('products.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('products.index')}}">
+
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">table_view</i>
+                    </div>
+
+                    <span class="nav-link-text ms-1">Products</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('categories.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('categories.index')}}">
+
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">table_view</i>
+                    </div>
+
+                    <span class="nav-link-text ms-1">Category</span>
+                </a>
+            </li>
 
 
             <li class="nav-item">
@@ -78,14 +98,6 @@
 
 
         </ul>
-    </div>
-
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-        <div class="mx-3">
-            <a class="btn btn-outline-primary mt-4 w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree" type="button">Documentation</a>
-            <a class="btn bg-gradient-primary w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-        </div>
-
     </div>
 
 </aside>

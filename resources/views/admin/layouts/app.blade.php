@@ -297,8 +297,11 @@
     </div>
 
 
-
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('admin/assets/base/base.js')}}"></script>
+    @section('script')
+    @show
     <!--   Core JS Files   -->
     <script src="{{ asset('admin/assets/js/core/popper.min.js')}}"></script>
     <script src="{{ asset('admin/assets/js/core/bootstrap.min.js')}}"></script>

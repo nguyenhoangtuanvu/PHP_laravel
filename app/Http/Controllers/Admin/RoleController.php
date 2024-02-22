@@ -36,7 +36,7 @@ class RoleController extends Controller
     public function store(CreateRoleRequest $request)
     {
         $dataCreate = $request->all();
-        $dataCreate['guard_namme'] = 'web';
+        $dataCreate['guard_name'] = 'web';
         // dd($dataCreate);
         $role = Role::create($dataCreate);
         $role->permissions()->attach($dataCreate['permission_ids']);
@@ -58,7 +58,7 @@ class RoleController extends Controller
     {
         $role = Role::with('permissions')->findOrFail($id);
         $permissions = Permisson::all()->groupBy('group');
-        // dd($permissions);
+        // dd($role->permissions);
         return view('admin/roles/edit', compact('role', 'permissions'));
     }
 

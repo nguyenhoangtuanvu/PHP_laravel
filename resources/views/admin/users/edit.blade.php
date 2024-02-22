@@ -1,59 +1,95 @@
 @extends('admin.layouts.app')
-@section('title', 'Edit User ' . $role->name)
+@section('title', 'Edit User ' . $user->name)
 @section('content')
     <div class="card">
         <h1>Edit role</h1>
 
         <div>
-            <form action="{{ route('roles.update', $role->id) }}" method="post">
+            <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
+                <div class="row">
+                    <div class=" input-group-static col-5 mb-4">
+                        <label>Image</label>
+                        <input type="file" accept="image/*" name="image" id="image-input" class="form-control">
 
+                        @error('image')
+                            <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-5">
+                        <img src="{{ $user->images->count() >0 ? asset('upload/users/' . $user->images->first()->url) : 'upload/users/default.png' }}" id="show-image" alt="" style="with:150px; height:130px;">
+                    </div>
+                </div>
                 <div class="input-group input-group-static mb-4">
                     <label>Name</label>
-                    <input type="text" value="{{ old('name') ?? $role->name }}" name="name" class="form-control">
+                    <input type="text" value="{{ old('name') ?? $user->name }}" name="name" class="form-control">
 
                     @error('name')
                         <span class="text-danger"> {{ $message }}</span>
                     @enderror
                 </div>
-
                 <div class="input-group input-group-static mb-4">
-                    <label>Display Name</label>
-                    <input type="text" value="{{ old('display_name') ?? $role->display_name }}" name="display_name"
-                        class="form-control">
-                    @error('display_name')
+                    <label>email</label>
+                    <input type="text" value="{{ old('email') ?? $user->email }}" name="email" class="form-control">
+
+                    @error('email')
                         <span class="text-danger"> {{ $message }}</span>
                     @enderror
                 </div>
-
                 <div class="input-group input-group-static mb-4">
-                    <label name="group" class="ms-0">Group</label>
-                    <select name="group" class="form-control" value={{ $role->group }}>
-                        <option value="system">System</option>
-                        <option value="user">User</option>
+                    <label>phone</label>
+                    <input type="text" value="{{ old('phone') ?? $user->phone }}" name="phone" class="form-control">
+
+                    @error('phone')
+                        <span class="text-danger"> {{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="input-group input-group-static mb-4">
+                    <label>address</label>
+                    <input type="text" value="{{ old('address') ?? $user->address }}" name="address" class="form-control">
+
+                    @error('address')
+                        <span class="text-danger"> {{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="input-group input-group-static mb-4">
+                    <label name="group" class="ms-0">gender</label>
+                    <select name="gender" class="form-control" value={{ $user->gender }}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
 
                     </select>
 
-                    @error('group')
+                    @error('gender')
                         <span class="text-danger"> {{ $message }}</span>
                     @enderror
                 </div>
+                <div class="input-group input-group-static mb-4">
+                    <label>password</label>
+                    <input type="text" name="password" class="form-control">
+
+                    @error('password')
+                        <span class="text-danger"> {{ $message }}</span>
+                    @enderror
+                </div>
+
+                
 
 
                 <div class="form-group">
                     <label for="">Permission</label>
                     <div class="row">
-                        @foreach ($permissions as $groupName => $permission)
+                        @foreach ($roles as $groupName => $role)
                             <div class="col-5">
                                 <h4>{{ $groupName }}</h4>
 
                                 <div>
-                                    @foreach ($permission as $item)
+                                    @foreach ($role as $item)
                                         <div class="form-check">
-                                            <input class="form-check-input" name="permission_ids[]" type="checkbox"
-                                                {{ $role->permissions->contains('name', $item->name) ? 'checked' : '' }}
+                                            <input class="form-check-input" name="role_ids[]" type="checkbox"
+                                                {{ $user->roles->contains('id', $item->id) ? 'checked' : '' }}
                                                 value="{{ $item->id }}">
                                             <label class="custom-control-label"
                                                 for="customCheck1">{{ $item->display_name }}</label>
@@ -65,8 +101,34 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-submit btn-primary">Submit</button>
+                <button type="submit" class="btn btn-submit btn-primary">Update</button>
             </form>
         </div>
     </div>
+@endsection
+
+@section('script')
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+    <script>
+        $(() => {
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#show-image').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#image-input").change(function() {
+                readURL(this);
+            });
+
+
+
+        });
+    </script>
 @endsection

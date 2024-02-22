@@ -7,7 +7,7 @@
         <h1>Create user</h1>
 
         <div>
-            <form action="{{ route('user.store') }}" method="post">
+            <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class=" input-group-static col-5 mb-4">
@@ -19,7 +19,7 @@
                         @enderror
                     </div>
                     <div class="col-5">
-                        <img src="" id="show-image" alt="">
+                        <img src="https://w3adda.com/wp-content/uploads/2019/09/No_Image-128.png" id="show-image" alt="" style="with:150px; height:130px;">
                     </div>
                 </div>
                 <div class="input-group input-group-static mb-4">

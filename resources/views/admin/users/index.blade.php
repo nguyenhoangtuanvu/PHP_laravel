@@ -11,7 +11,8 @@
     <div><a href="{{ route('user.create')}}" class="btn btn-primary"> Create</a></div>
     <table class="table table-hover">
         <tr>
-            <th>#</th>
+            <th>id</th>
+            <th>Image</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -21,12 +22,13 @@
         @foreach ($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
+                <td><img src="{{ $user->images->count() >0 ? asset('upload/'. $user->images->first()->url) : 'upload/default.webp' }}" width="70px" height="70px" alt=""></td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
 
                 <td>{{ $user->phone }}</td>
-                <td>
-                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                <td style="display:flex; padding-top: 20px;">
+                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning" style="margin-right: 20px;">Edit</a>
 
                     <form action="{{ route('user.destroy', $user->id) }}" id="form-delete{{ $user->id }}" method="post">
                         @csrf
