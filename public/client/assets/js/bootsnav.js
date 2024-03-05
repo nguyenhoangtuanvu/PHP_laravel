@@ -249,6 +249,7 @@
                     $("a.dropdown-toggle", this).off('click');
                     $("a.dropdown-toggle", this).on('click', function (e) {
                         e.stopPropagation();
+                        console.log('Dropdown Toggle');
                         $(this).closest("li.dropdown").find(".dropdown-menu").first().stop().fadeToggle().toggleClass(getIn);
                         $(this).closest("li.dropdown").first().toggleClass("on");                        
                         return false;

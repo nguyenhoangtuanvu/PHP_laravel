@@ -26,7 +26,7 @@ class Product extends Model
     }
     public function categories(): BelongsToMany 
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
     }
     public function assignCategory($categories_ids) {
         return $this->categories()->sync($categories_ids);
@@ -35,5 +35,9 @@ class Product extends Model
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageAble');
+    }
+    
+    public function getBy($dataGet, $category_id) {
+        return $this->whereHas('categories', fn($query) => $query->where('category_id', '=', $category_id))->get();
     }
 }

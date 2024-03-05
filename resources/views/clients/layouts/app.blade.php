@@ -16,8 +16,8 @@
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="{{ asset('client/assets/images/favicon.ico" type="image/x-icon')}}">
-    <link rel="apple-touch-icon" href="{{ asset('client/assets/images/apple-touch-icon.png')}}">
+    <link rel="shortcut icon" href="{{ asset('client/assets/images/favicon.ico')}}" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/png" href="{{ asset('client/assets/images/apple-touch-icon.png')}}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('client/assets/css/bootstrap.min.css')}}">
@@ -48,7 +48,7 @@
         <div class="main-instagram owl-carousel owl-theme">
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-01.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-01.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -56,7 +56,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-02.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-02.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-03.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-03.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-04.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-04.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -80,7 +80,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-05.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -88,7 +88,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-06.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-06.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -96,7 +96,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-07.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-07.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -104,7 +104,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-08.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-08.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -112,7 +112,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-09.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-09.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -120,7 +120,7 @@
             </div>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
+                    <img src="{{ asset('client/assets/images/instagram-img-05.jpg')}}" alt="" />
                     <div class="hov-in">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -152,7 +152,9 @@
     <script src="{{ asset('client/assets/js/jquery.superslides.min.js')}}"></script>
     <script src="{{ asset('client/assets/js/bootstrap-select.js')}}"></script>
     <script src="{{ asset('client/assets/js/inewsticker.js')}}"></script>
-    <script src="{{ asset('client/assets/js/bootsnav.js.')}}"></script>
+
+    <script src="{{ asset('client/assets/js/bootsnav.js')}}"></script>
+    
     <script src="{{ asset('client/assets/js/images-loded.min.js')}}"></script>
     <script src="{{ asset('client/assets/js/isotope.min.js')}}"></script>
     <script src="{{ asset('client/assets/js/owl.carousel.min.js')}}"></script>
