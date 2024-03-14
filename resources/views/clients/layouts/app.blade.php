@@ -164,6 +164,13 @@
     <script src="{{ asset('client/assets/js/form-validator.min.js')}}"></script>
     <script src="{{ asset('client/assets/js/contact-form-script.js')}}"></script>
     <script src="{{ asset('client/assets/js/custom.js')}}"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+    integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('admin/assets/base/base.js')}}"></script>
+    @yield('scripts')
 </body>
 
 </html>

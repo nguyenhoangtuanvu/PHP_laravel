@@ -18,6 +18,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd(auth()->user()->id);
         $products = $this->product->latest('id')->paginate(10);
         return view('clients.home')->with('products', $products);
     }

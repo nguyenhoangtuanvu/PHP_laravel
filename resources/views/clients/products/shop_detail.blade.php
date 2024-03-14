@@ -33,58 +33,62 @@
                 </div>
             </div>
             <div class="col-xl-7 col-lg-7 col-md-6">
-                <div class="single-product-details">
+                @if (session('message'))
+                <h2 class="" style="text-align: center; width:100%; color:red"> {{ session('message') }}</h2>
+                @endif
+                <form method="post" action="{{route('carts.add')}}" class="single-product-details">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
                     <h2>{{ $product->name}}</h2>
                     {{-- <h5> <del>$ 60.00</del> $40.79</h5> --}}
                     <h5>{{ $product->price}}</h5>
                     {{-- <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span> --}}
-                        <p>
-                            <h4>Short Description:</h4>
-                            <p>{{ $product->description}}</p>
-                            @if ($product->details->count() > 0)
-                            <ul>
-                                <li>
-                                    <div class="form-group size-st">
-                                        <label class="size-label">Size</label>
-                                        <select id="basic" class="selectpicker show-tick form-control" multiple>
-                                            @foreach ($product->details as $detail)
-                                            <option value="{{ $detail->size}}">{{ $detail->size}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group quantity-box">
-                                        <label class="control-label">Quantity</label>
-                                        <input class="form-control" name="quantity" value="1" min="0" max="20" type="number">
-                                    </div>
-                                </li>
-                            </ul>
-                            @else
-                            <label class="size-label">Sản Phẩm Tạm Thời Hết Hàng</label>
-                            @endif
+                        <h4>Short Description:</h4>
+                        <p>{{ $product->description}}</p>
+                        @if ($product->details->count() > 0)
+                        <ul>
+                            <li>
+                                <div class="form-group size-st">
+                                    <label class="size-label">Size</label>
+                                    <select name="size[]" id="basic" class="selectpicker show-tick form-control" multiple>
+                                        @foreach ($product->details as $detail)
+                                        <option value="{{ $detail->size}}">{{ $detail->size}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group quantity-box">
+                                    <label class="control-label">Quantity</label>
+                                    <input class="form-control" name="quantity" value="1" min="0" max="20" type="number">
+                                </div>
+                            </li>
+                        </ul>
+                        @else
+                        <label class="size-label">Sản Phẩm Tạm Thời Hết Hàng</label>
+                        @endif
 
-                            <div class="price-box-bar">
-                                <div class="cart-and-bay-btn">
-                                    <a class="btn hvr-hover" data-fancybox-close="" href="#">Buy New</a>
-                                    <a class="btn hvr-hover" data-fancybox-close="" href="#">Add to cart</a>
-                                </div>
+                        <div class="price-box-bar">
+                            <div class="cart-and-bay-btn">
+                                {{-- <a class="btn hvr-hover" data-fancybox-close="" href="#">Buy New</a> --}}
+                                <button class="btn hvr-hover" data-fancybox-close="" style="color: #ffffff">Add to cart</button>
                             </div>
+                        </div>
 
-                            <div class="add-to-btn">
-                                <div class="add-comp">
-                                    <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
-                                    <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a>
-                                </div>
-                                <div class="share-bar">
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-                                </div>
+                        <div class="add-to-btn">
+                            <div class="add-comp">
+                                <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
+                                <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a>
                             </div>
-                </div>
+                            <div class="share-bar">
+                                <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                                <a class="btn hvr-hover" href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
+                                <a class="btn hvr-hover" href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                                <a class="btn hvr-hover" href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
+                                <a class="btn hvr-hover" href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </form>
             </div>
         </div>
 

@@ -123,7 +123,7 @@
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="side-menu"><a href="#">
 						<i class="fa fa-shopping-bag"></i>
-                            <span class="badge">3</span>
+                            <span class="badge" id="productCountCart">{{ $countProductInCart }}</span>
 					</a></li>
                     </ul>
                 </div>
@@ -134,24 +134,19 @@
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
                     <ul class="cart-list">
+                        @foreach ($productInCart->products as $item)
                         <li>
-                            <a href="#" class="photo"><img src="{{ asset('client/assets/images/img-pro-01.jpg')}}" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Delica omtantur </a></h6>
-                            <p>1x - <span class="price">$80.00</span></p>
+                            <a href="{{route('client.shop.show', $item->id)}}">
+                                <a href="{{route('client.shop.show', $item->id)}}" class="photo"><img src="{{ asset('upload/'. $item->images->first()->url)}}" class="cart-thumb" alt="" /></a>
+                                <h6><a href="{{route('client.shop.show', $item->id)}}">{{$item->name}}</a></h6>
+                                <p>{{$item->pivot->product_quantity}}- <span class="price">${{number_format($item->price, 0, '', ',')}}</span></p>
+                            </a>
                         </li>
-                        <li>
-                            <a href="#" class="photo"><img src="{{ asset('client/assets/images/img-pro-02.jpg')}}" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Omnes ocurreret</a></h6>
-                            <p>1x - <span class="price">$60.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="{{ asset('client/assets/images/img-pro-03.jpg')}}" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Agam facilisis</a></h6>
-                            <p>1x - <span class="price">$40.00</span></p>
-                        </li>
+                            
+                        @endforeach
                         <li class="total">
-                            <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                            <span class="float-right"><strong>Total</strong>: $180.00</span>
+                            <a href="{{route('cart')}}" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+                            <span class="float-right"><strong>Total</strong>: ${{number_format($totalProductInCart, 0, '', ',')}}</span>
                         </li>
                     </ul>
                 </li>

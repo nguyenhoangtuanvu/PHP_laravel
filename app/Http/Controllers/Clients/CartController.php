@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Cart\CartResource;
 use App\Models\Cart;
 use App\Models\CartProduct;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
@@ -30,7 +32,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = $this->cart->firstOrCreateBy(auth()->user()->id)->load('products');
+
+        return view('clients.carts.cart', compact('cart'));
     }
 
     /**
@@ -46,38 +50,67 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->size) {
+            $product = $this->product->findOrFail($request->product_id);
+            $cart = $this->cart->firstOrCreateBy(auth()->user()->id);
+            $cartProduct = $this->cartProduct->getBy($cart->id, $product->id, $request->size);
+            if ($cartProduct) {
+                $quantity = $cartProduct->product_quantity;
+                $cartProduct->update(['product_quantity' => $quantity += $request->quantity]);
+            } else {
+                $dataCreate['cart_id'] = $cart->id;
+                $dataCreate['product_quantity'] = $request->quantity ?? 1;
+                $dataCreate['product_price'] = $product->price;
+                $dataCreate['product_id'] = $request->product_id;
+                foreach ($request->size as $size) {
+                    $dataCreate['product_size'] = $size;
+                    $this->cartProduct->create($dataCreate);
+                }
+            }
+            return  back()->with(['message' => 'Đã thêm thành công']);
+
+        } else {return back()->with(['message' => 'bạn chưa chọn size']);}
+    }
+
+    public function updateQuantityProduct(Request $request, $id) {
+        $cartProduct =  $this->cartProduct->find($id);
+        $dataUpdate = $request->all();
+        if($dataUpdate['product_quantity'] < 1 ) {
+            $cartProduct->delete();
+        } else {
+            $cartProduct->update($dataUpdate);
+        }
+
+        $cart =  $cartProduct->cart;
+
+        return response()->json([
+            'product_cart_id' => $id,
+            'cart' => new CartResource($cart),
+            'remove_product' => $dataUpdate['product_quantity'] < 1,
+            'cart_product_price' => $cartProduct->totalPrice()
+        ], Response::HTTP_OK);
+    }
+
+    public function deleteProduct($id) {
+        $cartProduct = $this->cartProduct->find($id);
+        $cartProduct->delete();
+        $cart = $cartProduct->cart;
+        
+        return response()->json([
+            'product_cart_id' => $id,
+            'cart' => new CartResource($cart)
+        ], Response::HTTP_OK);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function applyCoupon(Request $request)  // Can use Ajax
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $name = $request->input('coupon_code');
+        $coupon = $this->coupon->getExperyDate($name, auth()->user()->id);
+        if ($coupon) { $message = 'Áp dụng Coupon thành công'; } 
+        else { $message = 'Coupon không tồn tại hoặc đã hết hạn';}
+        return redirect()->route('cart')->with(['message' => $message]);
     }
 }

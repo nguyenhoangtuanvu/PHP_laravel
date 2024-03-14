@@ -25,4 +25,12 @@ class CartProduct extends Model
     {
         return $this->belongsTo(Cart::class);
     }
+
+    public function getBy($cartId, $productId, $productSize)
+    {
+        return CartProduct::whereCartId($cartId)->whereProductId($productId)->whereProductSize($productSize)->first();
+    }
+    public function totalPrice() {
+        return $this->product_price * $this->product_quantity;
+    }
 }

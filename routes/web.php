@@ -34,15 +34,21 @@ Route::get('/shop', [ClientProductController::class, 'index'])->name('client.sho
 Route::get('shop/{category_id}', [ClientProductController::class, 'indexFilter'])->name('client.shop.indexFilter'); 
 Route::get('shop_detail/{product_id}', [ClientProductController::class, 'show'])->name('client.shop.show'); 
 
+// carts
+Route::middleware('auth')->group(function() {
+    Route::post('add-to-cart', [CartController::class, 'store'])->name('carts.add');
+    Route::get('cart', [CartController::class, 'index'])->name('cart');
+    Route::post('update-quantity-product-in-cart/{cart_product_id}', [CartController::class, 'updateQuantityProduct'])->name('client.carts.update_product_quantity');
+    Route::post('delete-product-in-cart/{cart_product_id}', [CartController::class, 'deleteProduct'])->name('client.carts.delete_product');
+    Route::post('apply-coupon', [CartController::class, 'applyCoupon'])->name('carts.apply.coupon');
+
+});
+
 
 Route::get('/single-product', function () {
     return view('clients.products.shop_detail');
 });
 
-// carts
-Route::get('/cart', function () {
-    return view('clients.carts.cart');
-})->name('cart');
 Route::post('add-to-cart', [CartController::class, 'store'])->name('carts.add');
 
 Route::get('/checkout', function () {
@@ -61,19 +67,19 @@ Route::get('/service', function () {
 })->name('service');
 
 
-// Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function() {
+    // admin routes
+    Route::get('/dashboard', function () {
+        return view('admin.Dashboard.index');
+    })->name('dashboard');
     
-// });
-// admin routes
-Route::get('/dashboard', function () {
-    return view('admin.Dashboard.index');
-})->name('dashboard');
-
-Route::resource('roles', RoleController::class);
-Route::resource('user', UserController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('products', ProductController::class);
-Route::resource('coupons', CouponController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('coupons', CouponController::class);
+    
+});
 
 Auth::routes();
 

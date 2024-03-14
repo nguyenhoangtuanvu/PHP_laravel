@@ -26,7 +26,7 @@
 @import url(bootsnav.css);
 @import url(owl.carousel.min.css);
 @import url(jquery-ui.css);
-@import url(nice-select.css);
+/* @import url(nice-select.css); */
 @import url(baguetteBox.min.css);
 
 /*------------------------------------------------------------------
@@ -1860,11 +1860,22 @@
 }
  .quantity-box input{
      width: 60px;
-     border: 2px solid #010101;
+     border: 2px solid #a5a2a2;
      text-align: center;
+     background-color: #ffffff;
+
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
  .quantity-box input:focus{
      border-color: #d33b33;
+}
+.btn-update-quantity {
+    background-color: #d33b33;
+    color: #ffffff;
 }
  .name-pr a{
      font-weight: 700;
