@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Clients;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrderController extends Controller
 {
@@ -17,15 +18,18 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = $this->order->getWithPaginateBy(auth()->user()->id);
-        return view('clients.orders.orders', compact('orders'));
-    }
-    public function cancel($id) {
-        $order = $this->order->findOrFail($id);
-        $order->update(['status'=> 'canceled']);
-        return redirect()->route('orders')->with(['message'=>'Order canceled']);
+        $orders = $this->order->paginate(10);
+        return view('admin.orders.order')->with('orders', $orders);
     }
 
+    public function updateStatus(Request $request, $id) {
+        $order = $this->order->find($id);
+        $update = $order->update(['status' => $request->status]);
+        return  response()->json([
+            'message' => 'success'
+        ], Response::HTTP_OK);
+
+    }
     /**
      * Show the form for creating a new resource.
      */

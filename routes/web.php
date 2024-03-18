@@ -5,10 +5,13 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Clients\CartController;
 use App\Http\Controllers\Clients\ClientProductController;
 use App\Http\Controllers\Clients\HomeController;
+use App\Http\Controllers\Clients\OrderController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +44,10 @@ Route::middleware('auth')->group(function() {
     Route::post('update-quantity-product-in-cart/{cart_product_id}', [CartController::class, 'updateQuantityProduct'])->name('client.carts.update_product_quantity');
     Route::post('delete-product-in-cart/{cart_product_id}', [CartController::class, 'deleteProduct'])->name('client.carts.delete_product');
     Route::post('apply-coupon', [CartController::class, 'applyCoupon'])->name('carts.apply.coupon');
-
+    Route::get('check-out', [CartController::class, 'checkOut'])->name('checkOut')->middleware('user.can_checkout_cart');
+    Route::post('process-checkout', [CartController::class, 'processCheckout'])->name('checkOut.process')->middleware('user.can_checkout_cart');
+    Route::get('orders', [OrderController::class, 'index'])->name('orders');
+    Route::get('cancel-order/{product_id}', [OrderController::class, 'cancel'])->name('order.cancel');
 });
 
 
@@ -50,10 +56,6 @@ Route::get('/single-product', function () {
 });
 
 Route::post('add-to-cart', [CartController::class, 'store'])->name('carts.add');
-
-Route::get('/checkout', function () {
-    return view('clients.carts.checkout');
-})->name('checkout');
 
 // about
 Route::get('/about', function () {
@@ -78,6 +80,9 @@ Route::middleware('auth')->group(function() {
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('coupons', CouponController::class);
+
+    Route::get('admin-orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::post('update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update');
     
 });
 

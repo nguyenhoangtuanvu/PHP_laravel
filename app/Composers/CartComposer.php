@@ -43,7 +43,6 @@ class CartComposer
            $cart =  $this->cart->firstOrCreateBy(auth()->user()->id)->load('products');
            return $cart;
         }
-
     }
     public function getTotal() {
         if(auth()->check()) { 

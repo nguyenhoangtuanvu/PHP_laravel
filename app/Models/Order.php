@@ -20,4 +20,8 @@ class Order extends Model
         'payment',
         'user_id'
     ];
+
+    public function getWithPaginateBy($userID) {
+        return $this->where('user_id', $userID)->paginate(10);
+    }
 }

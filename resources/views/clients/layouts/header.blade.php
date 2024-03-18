@@ -43,12 +43,28 @@
 					</select>
                     </div>
                     <div class="right-phone-box">
-                        <p>Call US :- <a href="#"> +0935 794 380</a></p>
+                        <p>Call US :- <a href="#"> +0935 794 380 / {{auth()->check()}}</a></p>
                     </div>
                     <div class="our-link">
                         <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Our location</a></li>
+                            @if (auth()->check())
+                            <li>
+                                <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+    
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                                
+                            @else
+                            <li><a href="{{route('login')}}">Login</a></li>
+                            <li><a href="#">Rejstter</a></li>
+                            @endif
+
                             <li><a href="#">Contact Us</a></li>
                         </ul>
                     </div>
@@ -107,11 +123,11 @@
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('cart')}}">Cart</a></li>
-                                <li><a href="{{ route('checkout')}}">Checkout</a></li>
+                                <li><a href="{{ route('checkOut')}}">Checkout</a></li>
                                 <li><a href="{{ route('client.shop')}}">Favorite</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="->name('service')">Our Service</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('orders')}}">Orders</a></li>
                         <li class="nav-item"><a class="nav-link" href="->name('contact')">Contact Us</a></li>
                     </ul>
                 </div>

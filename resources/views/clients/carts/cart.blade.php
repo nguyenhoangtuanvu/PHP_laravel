@@ -81,7 +81,7 @@
                         @csrf
                         <div class="input-group input-group-sm">
                             <input name="coupon_code" class="form-control" placeholder="Enter your coupon code" aria-label="Coupon code"
-                                type="text">
+                                type="text" value="{{ Session::get('coupon_code')}}">
                             <div class="input-group-append">
                                 <button class="btn btn-theme" type="submit">Apply Coupon</button>
                             </div>
@@ -102,7 +102,7 @@
                         <h3>Order summary</h3>
                         <div class="d-flex">
                             <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold" id="sub-total"> $ {{number_format($totalProductInCart, 0, '', ',')}}</div>
+                            <div class="ml-auto font-weight-bold" id="sub-total" data-price="{{$cart->getTotalPrice()}}"> $ {{number_format($cart->getTotalPrice(), 0, '', ',')}}</div>
                         </div>
                         {{-- <div class="d-flex">
                             <h4>Discount</h4>
@@ -110,8 +110,13 @@
                         </div>
                         <hr class="my-1"> --}}
                         <div class="d-flex">
+                            @if(session('discount_amount_price'))
                             <h4>Coupon Discount</h4>
-                            <div class="ml-auto font-weight-bold"> $ 10 </div>
+                            <div class="ml-auto font-weight-bold coupon-discount" data-price="{{session('discount_amount_price')}}"> $ {{ session('discount_amount_price')}} </div>
+                            @else
+                            <h4>Coupon Discount</h4>
+                            <div class="ml-auto font-weight-bold"> $ 0 </div>
+                            @endif
                         </div>
                         {{-- <div class="d-flex">
                             <h4>Tax</h4>
@@ -124,12 +129,12 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5"> $ {{number_format($totalProductInCart, 0, '', ',')}} </div>
-                        </div>
+                            <div class="ml-auto h5 grand-total"> $ {{number_format($cart->getTotalPrice(), 0, '', ',')}} </div>
+                        </div> 
                         <hr>
                     </div>
                 </div>
-                <div class="col-12 d-flex shopping-box"><a href="checkout.html" class="ml-auto btn hvr-hover">Checkout</a>
+                <div class="col-12 d-flex shopping-box"><a href="{{ route('checkOut')}}" class="ml-auto btn hvr-hover">Checkout</a>
                 </div>
             </div>
 
@@ -144,7 +149,19 @@
             currency: 'USD',
         });
 
-         $(document).on(
+        getTotalValue();
+        function getTotalValue() {
+            // let subTotal = $('#sub-total').data('price');
+            let subTotal = document.querySelector('#sub-total').dataset.price;
+            console.log("subTotal:",subTotal);
+            let couponDiscount = $('.coupon-discount').data('price');
+            console.log("couponDiscount:", couponDiscount)
+            if (couponDiscount) {
+                $('.grand-total').text(USDollar.format(subTotal - couponDiscount));
+            }
+
+        }
+        $(document).on(
         "click",
         ".btn-update-quantity",
         _.debounce(function (e) {
@@ -166,8 +183,10 @@
                         `${USDollar.format(res.cart_product_price)}`
                     );
                 }
-                
                 $("#sub-total").text(`${USDollar.format(cart.total_price)}`);
+                $("#sub-total").attr('data-price', cart.total_price);
+                getTotalValue();
+                
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -193,6 +212,7 @@
                     $("#productCountCart").text(cart.product_count);
                     $("#sub-total").html(`${USDollar.format(cart.total_price)}`);
                     $(`#row-${cartProductId}`).remove();
+                    getTotalValue();
                 })
 
             })

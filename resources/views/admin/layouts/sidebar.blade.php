@@ -27,7 +27,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('roles.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('roles.index')}}">
+                <a class="nav-link text-white {{ request()->routeIs('roles.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('roles.index')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('user.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('user.index')}}">
+                <a class="nav-link text-white {{ request()->routeIs('user.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('user.index')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
@@ -47,7 +47,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('products.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('products.index')}}">
+                <a class="nav-link text-white {{ request()->routeIs('products.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('products.index')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
@@ -57,7 +57,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('categories.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('categories.index')}}">
+                <a class="nav-link text-white {{ request()->routeIs('categories.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('categories.index')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
@@ -67,7 +67,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('coupons.index') ? 'bg-gradient-primary active' : ''}}" href="{{ route('coupons.index')}}">
+                <a class="nav-link text-white {{ request()->routeIs('coupons.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('coupons.index')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
@@ -76,37 +76,16 @@
                     <span class="nav-link-text ms-1">Coupons</span>
                 </a>
             </li>
-
-
             <li class="nav-item">
-                <a class="nav-link text-white " href="./sign-in.html">
+                <a class="nav-link text-white {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('admin.orders.index')}}">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">login</i>
+                        <i class="material-icons opacity-10">table_view</i>
                     </div>
 
-                    <span class="nav-link-text ms-1">Sign In</span>
+                    <span class="nav-link-text ms-1">Orders</span>
                 </a>
             </li>
-
-
-            <li class="nav-item">
-                <a class="nav-link text-white " href="./sign-up.html">
-
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">assignment</i>
-                    </div>
-
-                    <span class="nav-link-text ms-1">Sign Up</span>
-                </a>
-            </li>
-
-
-
-
-
-
-
         </ul>
     </div>
 

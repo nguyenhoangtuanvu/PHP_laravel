@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Orders\CreateOrderRequest;
 use App\Http\Resources\Cart\CartResource;
 use App\Models\Cart;
 use App\Models\CartProduct;
@@ -11,6 +12,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -109,8 +111,41 @@ class CartController extends Controller
     {
         $name = $request->input('coupon_code');
         $coupon = $this->coupon->getExperyDate($name, auth()->user()->id);
-        if ($coupon) { $message = 'Áp dụng Coupon thành công'; } 
-        else { $message = 'Coupon không tồn tại hoặc đã hết hạn';}
+        if ($coupon) { 
+            $message = 'Áp dụng Coupon thành công'; 
+            Session::put('coupon_id', $coupon->id);
+            Session::put('discount_amount_price', $coupon->value);
+            Session::put('coupon_code', $coupon->name);
+        } 
+        else { 
+            $message = 'Coupon không tồn tại hoặc đã hết hạn';
+            Session::forget(['coupon_id', 'discount_amount_price', 'coupon_code']);
+        }
         return redirect()->route('cart')->with(['message' => $message]);
     }
-}
+
+    public function checkOut() {
+        $cart = $this->cart->firstOrCreateBy(auth()->user()->id)->load('products');
+        return view('clients.carts.checkout', compact('cart'));
+    }
+    public function processCheckout(CreateOrderRequest $request) {
+        $dataCreate = $request->all();
+        $dataCreate['user_id'] = auth()->user()->id;
+        $dataCreate['status'] = 'pending';
+        $dataCreate['payment'] = 'money';
+        $this->order->create($dataCreate);
+
+        $couponID = Session::get('coupon_id');
+        if ($couponID) {
+            $coupon = $this->coupon->find($couponID);
+            if ($coupon) {
+                $coupon->users()->attach(auth()->user()->id, ['value' => $coupon->value]);
+            }
+        }
+        $cart = $this->cart->firstOrCreateBy(auth()->user()->id);
+        $cart->products()->detach();
+        
+        Session::forget(['coupon_id', 'discount_amount_price', 'coupon_code']);
+        return redirect()->route('orders')->with(['message' => 'order successful']);
+    }
+}   
