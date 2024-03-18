@@ -84,22 +84,22 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="{{ route('client.shop')}}"><img src="{{ asset('client/assets/images/logo.png')}}" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="{{ route('client.shop.index')}}"><img src="{{ asset('client/assets/images/logo.png')}}" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('client.home')}}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('about')}}">About Us</a></li>
-                        <li class="dropdown active megamenu-fw">
-                            <a href="{{ route('client.shop')}}" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+                        <li class="nav-item {{request()->routeIs('client.home') ? 'active' :'' }}"><a class="nav-link" href="{{ route('client.home')}}">Home</a></li>
+                        <li class="nav-item {{request()->routeIs('about') ? 'active' :'' }}"><a class="nav-link" href="{{ route('about')}}">About Us</a></li>
+                        <li class="dropdown megamenu-fw {{request()->routeIs('client.shop.*') ? 'active' :'' }}">
+                            <a href="{{ route('client.shop.index')}}" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
                             <ul class="dropdown-menu megamenu-content" role="menu">
                                 <li>
                                     <div class="row">
                                         <div class="col-menu col-md-3">
-                                            <h6 class="title"><a href="{{ route('client.shop')}}">All PRODUCTS</a></h6>
+                                            <h6 class="title"><a href="{{ route('client.shop.index')}}">All PRODUCTS</a></h6>
                                         </div>
                                         @foreach ($categories as $category)
                                         <div class="col-menu col-md-3">
@@ -119,16 +119,16 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown {{request()->routeIs('cart') ? 'active' :'' }}">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('cart')}}">Cart</a></li>
                                 <li><a href="{{ route('checkOut')}}">Checkout</a></li>
-                                <li><a href="{{ route('client.shop')}}">Favorite</a></li>
+                                <li><a href="{{ route('client.shop.index')}}">Favorite</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{route('orders')}}">Orders</a></li>
-                        <li class="nav-item"><a class="nav-link" href="->name('contact')">Contact Us</a></li>
+                        <li class="nav-item {{request()->routeIs('orders') ? 'active' :'' }}"><a class="nav-link" href="{{route('orders')}}">Orders</a></li>
+                        <li class="nav-item {{request()->routeIs('contact') ? 'active' :'' }}"><a class="nav-link" href="{{route('contact')}}">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -150,7 +150,7 @@
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
                     <ul class="cart-list">
-                        @foreach ($productInCart->products as $item)
+                        {{-- @foreach ($productInCart->products as $item)
                         <li>
                             <a href="{{route('client.shop.show', $item->id)}}">
                                 <a href="{{route('client.shop.show', $item->id)}}" class="photo"><img src="{{ asset('upload/'. $item->images->first()->url)}}" class="cart-thumb" alt="" /></a>
@@ -159,7 +159,7 @@
                             </a>
                         </li>
                             
-                        @endforeach
+                        @endforeach --}}
                         <li class="total">
                             <a href="{{route('cart')}}" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
                             <span class="float-right"><strong>Total</strong>: ${{number_format($totalProductInCart, 0, '', ',')}}</span>

@@ -12,7 +12,9 @@
             Products list
         </h1>
         <div>
+            @can('create-product')
             <a href="{{ route('products.create') }}" class="btn btn-primary">Create</a>
+            @endcan
 
         </div>
         <div>
@@ -36,13 +38,13 @@
 
                         <td>{{ $item->sale }}</td>
                         <td>
-                        {{-- @can --}}
+                        @can('update-product')
                             <a href="{{ route('products.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                        {{-- @endcan --}}
-                        {{-- @can('show-product') --}}
+                        @endcan
+                        @can('show-product')
                             <a href="{{ route('products.show', $item->id) }}" class="btn btn-warning">Show</a>
-                        {{-- @endcan --}}
-                        {{-- @can('delete-product') --}}
+                        @endcan
+                        @can('delete-product')
                             <form action="{{ route('products.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
                                 method="post">
                                 @csrf
@@ -51,7 +53,7 @@
                             </form>
 
                             <button class="btn btn-delete btn-danger" data-id={{ $item->id }}>Delete</button>
-                        {{-- @endcan --}}
+                        @endcan
                 </tr>
             @endforeach
         </table>

@@ -26,7 +26,7 @@ class Cart extends Model
     public function firstOrCreateBy($userId) {
         $cart = $this->getBy($userId);
         if(!$cart) {
-            $cart = $this->cart->create(['user_id' => $userId]);
+            $cart = $this->create(['user_id' => $userId]);
         }
         return $cart;
     }

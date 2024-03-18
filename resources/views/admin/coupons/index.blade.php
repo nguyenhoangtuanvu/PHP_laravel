@@ -12,7 +12,9 @@
             Coupon list
         </h1>
         <div>
+            @can('create-coupon')
             <a href="{{ route('coupons.create') }}" class="btn btn-primary">Create</a>
+            @endcan
 
         </div>
         <div>
@@ -37,10 +39,10 @@
                         <td>{{ $item->expery_date }}</td>
 
                         <td>
-                            {{-- @can('update-coupon') --}}
+                            @can('update-coupon')
                                 <a href="{{ route('coupons.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                            {{-- @endcan --}}
-                            {{-- @can('delete-coupon') --}}
+                            @endcan
+                            @can('delete-coupon')
                                 <form action="{{ route('coupons.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
                                     method="post">
                                     @csrf
@@ -49,7 +51,7 @@
                                 </form>
 
                                 <button class="btn btn-delete btn-danger" data-id={{ $item->id }}>Delete</button>
-                            {{-- @endcan --}}
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

@@ -25,7 +25,7 @@
                 </a>
             </li>
 
-
+            @hasrole('super-admin')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('roles.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('roles.index')}}">
 
@@ -36,6 +36,8 @@
                     <span class="nav-link-text ms-1">Roles</span>
                 </a>
             </li>
+            @endhasrole
+            @can('show-user')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('user.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('user.index')}}">
 
@@ -46,6 +48,8 @@
                     <span class="nav-link-text ms-1">Users</span>
                 </a>
             </li>
+            @endcan
+            @can('show-product')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('products.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('products.index')}}">
 
@@ -56,6 +60,8 @@
                     <span class="nav-link-text ms-1">Products</span>
                 </a>
             </li>
+            @endcan
+            @can('show-category')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('categories.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('categories.index')}}">
 
@@ -66,6 +72,8 @@
                     <span class="nav-link-text ms-1">Category</span>
                 </a>
             </li>
+            @endcan
+            @can('show-coupon')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('coupons.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('coupons.index')}}">
 
@@ -76,6 +84,8 @@
                     <span class="nav-link-text ms-1">Coupons</span>
                 </a>
             </li>
+            @endcan
+            @can('list-order')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-primary active' : ''}}" href="{{ route('admin.orders.index')}}">
 
@@ -86,6 +96,7 @@
                     <span class="nav-link-text ms-1">Orders</span>
                 </a>
             </li>
+            @endcan
         </ul>
     </div>
 

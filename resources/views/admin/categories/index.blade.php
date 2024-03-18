@@ -8,7 +8,9 @@
     @if (session('message'))
             <h1 class="text-primary">{{ session('message') }}</h1>
     @endif
+    @can('create-category')
     <div><a href="{{ route('categories.create')}}" class="btn btn-primary"> Create</a></div>
+    @endcan
     <table class="table table-hover">
         <tr>
             <th>#</th>
@@ -24,14 +26,18 @@
 
                 <td>{{ $items->parent_name }}</td>
                 <td>
+                    @can('update-category')
                     <a href="{{ route('categories.edit', $items->id) }}" class="btn btn-warning">Edit</a>
-
+                    @endcan
+                    @can('delete-category')
                     <form action="{{ route('categories.destroy', $items->id) }}" id="form-delete{{ $items->id }}" method="post">
                         @csrf
                         @method('delete')
 
                         <button type="submit" class="btn btn-delete btn-danger" data-id={{ $items->id }}>Delete</button>
                     </form>
+                    @endcan
+
 
 
                 </td>

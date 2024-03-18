@@ -8,6 +8,7 @@ use App\Http\Requests\Roles\CreateRoleRequest;
 use App\Http\Requests\Roles\UpdateRoleRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
@@ -37,12 +38,20 @@ class RoleController extends Controller
     {
         $dataCreate = $request->all();
         $dataCreate['guard_name'] = 'web';
-        // dd($dataCreate);
         $role = Role::create($dataCreate);
         $role->permissions()->attach($dataCreate['permission_ids']);
         return to_route('roles.index')->with(['message' => 'create successfully']);
     }
 
+    // public function testRole() {
+    //     $superAdmin = User::whereEmail('avu7212@gmail.com')->first();
+    //     $listPermissions = Permisson::all();
+    //     $array = [];
+    //     foreach ($listPermissions as $permission) {
+    //         array_push($array, $permission->id);
+    //     }
+    //     $superAdmin->permissions()->attach($array);
+    // }
     /**
      * Display the specified resource.
      */
@@ -71,7 +80,7 @@ class RoleController extends Controller
         $dataUpdate = $request->all();
         $role->update($dataUpdate);
         
-        $role->permissions()->sync($dataUpdate['permission_ids']);
+        $role->permissions()->sync($dataUpdate['permission_ids'] ?? []);
         return to_route('roles.index')->with(['message' => 'update successfully']);
     }
 

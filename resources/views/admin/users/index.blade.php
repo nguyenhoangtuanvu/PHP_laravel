@@ -8,7 +8,9 @@
     @if (session('message'))
             <h1 class="text-primary">{{ session('message') }}</h1>
     @endif
+    @can('create-user')
     <div><a href="{{ route('user.create')}}" class="btn btn-primary"> Create</a></div>
+    @endcan
     <table class="table table-hover">
         <tr>
             <th>id</th>
@@ -28,14 +30,18 @@
 
                 <td>{{ $user->phone }}</td>
                 <td style="display:flex; padding-top: 20px;">
+                    @can('update-user')
                     <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning" style="margin-right: 20px;">Edit</a>
-
+                    @endcan
+                    @can('update-user')
                     <form action="{{ route('user.destroy', $user->id) }}" id="form-delete{{ $user->id }}" method="post">
                         @csrf
                         @method('delete')
 
                         <button type="submit" class="btn btn-delete btn-danger" data-id={{ $user->id }}>Delete</button>
                     </form>
+                    @endcan
+
 
 
                 </td>

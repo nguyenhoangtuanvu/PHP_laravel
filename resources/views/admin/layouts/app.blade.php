@@ -178,12 +178,17 @@
                             </ul>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <a href="./pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
-                                <i class="fa fa-user me-sm-1"></i>
-
-                                <span class="d-sm-inline d-none">Sign In</span>
-
-                            </a>
+                            <a class="nav-link text-body font-weight-bold px-0" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-user me-sm-1"></i>
+                                    {{ __('Logout') }}
+                                </a>
+                                
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                                {{-- <span class="d-sm-inline d-none">Sign In</span> --}}
                         </li>
                     </ul>
                 </div>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permisson;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -27,6 +28,23 @@ class RoleDatabaseSeeder extends Seeder
         foreach($roles as $role){
             Role::updateOrCreate($role);
         }
+
+        $userSuperAdmin = User::whereEmail('admin@gmail.com')->first();
+        if(!$userSuperAdmin) {
+            $userSuperAdmin = User::factory()->create(['name' => 'admin','email' => 'admin@gmail.com', 'password' => 'admin@gmail.com']); // get or create user super admin
+        }
+
+        $roleSuperAdmin = Role::whereName('super-admin')->first(); // get role super admin
+        $userSuperAdmin->roles()->attach($roleSuperAdmin->id); // gán role cho user super admin.
+        // $userSuperAdmin->assignRole('super-admin'); 
+
+        // $listPermissions = Permisson::all();
+        // $array = [];
+        // foreach ($listPermissions as $permission) {
+        //     array_push($array, $permission->id);
+        // }
+        // $roleSuperAdmin->permissions()->attach($array); // assign permission for role super admin
+
 
 
         $permissions = [
